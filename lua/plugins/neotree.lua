@@ -14,6 +14,19 @@ return {
     -- },
     --window = { position = "right", width = 100 },
     filesystem = {
+      filtered_items = {
+        visible = true,
+        show_hidden_count = true,
+        hide_dotfiles = false,
+        hide_gitignored = true,
+        hide_by_name = {
+          "node_modules",
+          -- '.git',
+          -- '.DS_Store',
+          -- 'thumbs.db',
+        },
+        never_show = {},
+      },
       commands = {
         -- I got annoyed that neotree was not able to set a directory to root
         -- and scroll to the top. Instead it just showed the last file in the
