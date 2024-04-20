@@ -5,25 +5,11 @@ return {
       mappings = {
         -- first key is the mode
         n = {
-          -- ["gb"] = {
-          --        ":bNext<cr>",
-          -- 	--function()
-          -- 	--	require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
-          -- 	--end,
-          -- 	desc = "Next buffer",
-          -- },
-          -- ["gB"] = {
-          --        ":bprevious<cr>",
-          -- 	--function()
-          -- 	--	require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
-          -- 	--end,
-          -- 	desc = "Previous buffer",
-          -- },
-          ["fb"] = {
+          ["gb"] = {
             function() require("astrocore.buffer").nav(vim.v.count1) end,
             desc = "Next buffer",
           },
-          ["fB"] = {
+          ["gB"] = {
             function() require("astrocore.buffer").nav(-vim.v.count1) end,
             desc = "Previous buffer",
           },
@@ -37,8 +23,6 @@ return {
           ["<C-Left>"] = { "b", desc = "jump one word back" },
           ["<C-Right>"] = { "e", desc = "jump one word forward" },
           ["<C-V>"] = { '"+gP', desc = "paste from OS clipboard" },
-          -- quick save
-          -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
         },
         i = {
 
