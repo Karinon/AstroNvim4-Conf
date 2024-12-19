@@ -1,3 +1,24 @@
+local my_set_root = function(state)
+  local fs = require "neo-tree.sources.filesystem"
+  local tree = state.tree
+  local node = tree:get_node()
+  if node.type == "file" then
+    if state.search_pattern then fs.reset_search(state, false) end
+    local g = function() vim.cmd.normal "gg" end
+    fs._navigate_internal(state, node:get_parent_id(), nil, g, false)
+  elseif node.type == "directory" then
+    if state.search_pattern then fs.reset_search(state, false) end
+    local g = function() vim.cmd.normal "gg" end
+    fs._navigate_internal(state, node.id, nil, g, false)
+  end
+end
+
+local my_fuzzy_finder = function(state)
+  my_set_root(state)
+  local commands = require "neo-tree.sources.filesystem.commands"
+  commands.fuzzy_finder(state)
+end
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
   cmd = "Neotree",
@@ -33,20 +54,8 @@ return {
         -- folder and I had to manually scroll up to see the rest of the files
 
         -- This hack tackles it via an callback which goes to the top via gg
-        set_root = function(state)
-          local fs = require "neo-tree.sources.filesystem"
-          local tree = state.tree
-          local node = tree:get_node()
-          if node.type == "file" then
-            if state.search_pattern then fs.reset_search(state, false) end
-            local g = function() vim.cmd.normal "gg" end
-            fs._navigate_internal(state, node:get_parent_id(), nil, g, false)
-          elseif node.type == "directory" then
-            if state.search_pattern then fs.reset_search(state, false) end
-            local g = function() vim.cmd.normal "gg" end
-            fs._navigate_internal(state, node.id, nil, g, false)
-          end
-        end,
+        set_root = my_set_root,
+        fuzzy_finder = my_fuzzy_finder,
       },
       -- window = {
       --   mappings = {
