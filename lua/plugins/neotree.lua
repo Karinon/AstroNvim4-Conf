@@ -4,11 +4,15 @@ local my_set_root = function(state)
   local node = tree:get_node()
   if node.type == "file" then
     if state.search_pattern then fs.reset_search(state, false) end
-    local g = function() vim.cmd.normal "gg" end
+    local g = function()
+        vim.api.nvim_win_set_cursor(0, { 1, 0 }) -- {line, column}
+    end
     fs._navigate_internal(state, node:get_parent_id(), nil, g, false)
   elseif node.type == "directory" then
     if state.search_pattern then fs.reset_search(state, false) end
-    local g = function() vim.cmd.normal "gg" end
+    local g = function()
+        vim.api.nvim_win_set_cursor(0, { 1, 0 }) -- {line, column}
+    end
     fs._navigate_internal(state, node.id, nil, g, false)
   end
 end
